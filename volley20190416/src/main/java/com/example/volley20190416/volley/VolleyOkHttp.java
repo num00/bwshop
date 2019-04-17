@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class VolleyOkHttp {
@@ -55,7 +56,7 @@ public class VolleyOkHttp {
         MappVolley.requestQueue().add(stringRequest);
     }
 
-    public void PostOk(String url, final Map<String, String> map, final CallBack callBack) {
+    public void PostOk(String url, final HashMap<String, String> map, final CallBack callBack) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

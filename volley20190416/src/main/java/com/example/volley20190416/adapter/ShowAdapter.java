@@ -30,14 +30,35 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         Glide.with(context).load(jsonBean.getResult().get(i).getMasterPic()).into(viewHolder.imag);
         viewHolder.text.setText(jsonBean.getResult().get(i).getCommodityName());
+        //单击事件的回调
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerviewListener.callback(v);
+            }
+        });
+        //长按事件的回调
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                recyvlerLofLisenter.longback(v, viewHolder.getAdapterPosition());
+                return true;
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return jsonBean.getResult().size();
+    }
+
+    //删除方法
+    public void removeData(int pos) {
+        jsonBean.getResult().remove(pos);
+        notifyItemRemoved(pos);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,6 +70,33 @@ public class ShowAdapter extends RecyclerView.Adapter<ShowAdapter.ViewHolder> {
             super(itemView);
             imag = itemView.findViewById(R.id.show_image);
             text = itemView.findViewById(R.id.show_text);
+
+
         }
+    }
+
+    //声明类
+    RecyclerviewListener recyclerviewListener;
+    RecyvlerLofLisenter recyvlerLofLisenter;
+
+    //单击的接口实现
+    public void setRecyclerviewListener(RecyclerviewListener recyclerviewListener) {
+        this.recyclerviewListener = recyclerviewListener;
+    }
+
+    //单击的接口
+    public interface RecyclerviewListener {
+
+        void callback(View v);
+    }
+
+    //长按接口的实现
+    public void setRecyclerviewlogListener(RecyvlerLofLisenter recyvlerLofLisenter) {
+        this.recyvlerLofLisenter = recyvlerLofLisenter;
+    }
+
+    //长按接口
+    public interface RecyvlerLofLisenter {
+        void longback(View v, int j);
     }
 }
