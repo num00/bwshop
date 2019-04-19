@@ -54,5 +54,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         HomeAdapter homeAdapter = new HomeAdapter(MainActivity.this, result, jsonsBean);
         recy.setAdapter(homeAdapter);
 
+
     }
 }

@@ -1,10 +1,12 @@
 package com.example.duotiaomu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +49,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
             View view = LayoutInflater.from(context).inflate(R.layout.mlss_layout, viewGroup, false);
             return new MlssViewHolder(view);
         } else if (i == PzshType) {
-
             View view = LayoutInflater.from(context).inflate(R.layout.pzsh_layout, viewGroup, false);
             return new PzshHolder(view);
         } else {
@@ -61,11 +62,19 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         if (i == bannertype) {
             BannerHolder bannerHolder = (BannerHolder) viewHolder;
-            bannerHolder.banner.setData(jsonbannerBean.getResult(),null);
+            bannerHolder.banner.setData(jsonbannerBean.getResult(), null);
             bannerHolder.banner.setmAdapter(new XBanner.XBannerAdapter() {
                 @Override
                 public void loadBanner(XBanner banner, View view, int position) {
                     Glide.with(context).load(jsonbannerBean.getResult().get(position).getImageUrl()).into((ImageView) view);
+                }
+            });
+            bannerHolder.banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
+                @Override
+                public void onItemClick(XBanner banner, int position) {
+                    Intent intent = new Intent(context, ShowActivity.class);
+                    Log.d("banner","大大大第三方对方");
+                    context.startActivity(intent);
                 }
             });
         } else if (i == Mlsstype) {
@@ -76,6 +85,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ArrayList<CommidBean> commodityList = resultBean.getMlss().getCommodityList();
             MlssAdapter mlssAdapter = new MlssAdapter(context, commodityList);
             mlssViewHolder.recy.setAdapter(mlssAdapter);
+            mlssAdapter.getlicker(new MlssAdapter.SetOnclick() {
+                @Override
+                public void getonclick() {
+                    Intent intent = new Intent(context, ShowActivity.class);
+                    context.startActivity(intent);
+                }
+            });
 
         } else if (i == PzshType) {
             PzshHolder pzshHolder = (PzshHolder) viewHolder;
@@ -85,6 +101,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ArrayList<CommidBean> commodityList = resultBean.getPzsh().getCommodityList();
             PzshAdapter pzshAdapter = new PzshAdapter(context, commodityList);
             pzshHolder.recy.setAdapter(pzshAdapter);
+            pzshAdapter.getlicker(new MlssAdapter.SetOnclick() {
+                @Override
+                public void getonclick() {
+                    Intent intent = new Intent(context, ShowActivity.class);
+                    context.startActivity(intent);
+                }
+            });
 
         } else {
             RxxpHolder rxxpHolder = (RxxpHolder) viewHolder;
@@ -94,6 +117,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ArrayList<CommidBean> commodityList = resultBean.getRxxp().getCommodityList();
             RxxpAdapter rxxpAdapter = new RxxpAdapter(context, commodityList);
             rxxpHolder.recy.setAdapter(rxxpAdapter);
+            rxxpAdapter.getlicker(new MlssAdapter.SetOnclick() {
+                @Override
+                public void getonclick() {
+                    Intent intent = new Intent(context, ShowActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

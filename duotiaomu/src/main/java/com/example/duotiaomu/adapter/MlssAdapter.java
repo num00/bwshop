@@ -35,6 +35,12 @@ public class MlssAdapter extends RecyclerView.Adapter<MlssAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.text.setText(commodityList.get(i).getCommodityName());
         Glide.with(context).load(commodityList.get(i).getMasterPic()).into(viewHolder.image);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setOnclick.getonclick();
+            }
+        });
     }
 
     @Override
@@ -52,5 +58,15 @@ public class MlssAdapter extends RecyclerView.Adapter<MlssAdapter.ViewHolder> {
             image = itemView.findViewById(R.id.mshow_image);
             text = itemView.findViewById(R.id.mshow_text);
         }
+    }
+
+    SetOnclick setOnclick;
+
+    public void getlicker(SetOnclick setOnclick) {
+        this.setOnclick = setOnclick;
+    }
+
+    public interface SetOnclick {
+        void getonclick();
     }
 }

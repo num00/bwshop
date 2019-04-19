@@ -35,6 +35,12 @@ public class PzshAdapter extends RecyclerView.Adapter<PzshAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.text.setText(commodityList.get(i).getCommodityName());
         Glide.with(context).load(commodityList.get(i).getMasterPic()).into(viewHolder.image);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setOnclick.getonclick();
+            }
+        });
     }
 
     @Override
@@ -52,5 +58,14 @@ public class PzshAdapter extends RecyclerView.Adapter<PzshAdapter.ViewHolder> {
             image = itemView.findViewById(R.id.pshow_image);
             text = itemView.findViewById(R.id.pshow_text);
         }
+    }
+    MlssAdapter.SetOnclick setOnclick;
+
+    public void getlicker(MlssAdapter.SetOnclick setOnclick) {
+        this.setOnclick = setOnclick;
+    }
+
+    public interface SetOnclick {
+        void getonclick();
     }
 }
